@@ -51,6 +51,9 @@ def get_lane_speed_key(physical_port, port_speed, lane_count):
             host_electrical_interface_id = appl_adv_dict[app_id].get('host_electrical_interface_id')
             if host_electrical_interface_id:
                 lane_speed_key = LANE_SPEED_KEY_PREFIX + host_electrical_interface_id.split()[0]
+    elif xcvrd.is_sff_api(api):
+        lane_speed = int(port_speed) // lane_count
+        lane_speed_key = LANE_SPEED_KEY_PREFIX + str(lane_speed // 1000) + "G"
 
     return lane_speed_key
 
