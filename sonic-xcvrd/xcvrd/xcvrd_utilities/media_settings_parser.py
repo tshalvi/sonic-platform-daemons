@@ -22,6 +22,13 @@ helper_logger = logger.Logger(SYSLOG_IDENTIFIER)
 
 def load_media_settings():
     global g_dict
+
+    version_info = device_info.get_sonic_version_info()
+    if version_info and version_info['asic_type'] == 'mellanox':
+        from sonic_platform.device_data import DeviceDataManager
+        if not DeviceDataManager.is_module_host_management_mode():
+            return {}
+
     (platform_path, hwsku_path) = device_info.get_paths_to_platform_and_hwsku_dirs()
 
     # Support to fetch media_settings.json both from platform folder and HWSKU folder
