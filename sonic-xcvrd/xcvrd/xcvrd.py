@@ -35,6 +35,9 @@ try:
     from .xcvrd_utilities import optics_si_parser
     
     from sonic_platform_base.sonic_xcvr.api.public.c_cmis import CmisApi
+    from sonic_platform_base.sonic_xcvr.api.public.sff8436 import Sff8436Api
+    from sonic_platform_base.sonic_xcvr.api.public.sff8636 import Sff8636Api
+
 
 except ImportError as e:
     raise ImportError(str(e) + " - required module not found")
@@ -127,6 +130,9 @@ def log_exception_traceback():
     for tb_line in msg:
         for tb_line_split in tb_line.splitlines():
             helper_logger.log_error(tb_line_split)
+
+def is_sff_api(api):
+    return isinstance(api, Sff8636Api) or isinstance(api, Sff8436Api)
 
 def is_cmis_api(api):
    return isinstance(api, CmisApi)
